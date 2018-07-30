@@ -12,3 +12,7 @@ app.use(bodyParser());
 app.use(routesMiddler());
 
 app.listen(3000);
+
+app.on('error', (error) => {
+  console.warn('app has some error:', error);
+});

@@ -10,8 +10,13 @@ const controllers_js = controllers.filter(c => c.endsWith('.js'));
 for (const control of controllers_js) {
   const mapping = require(path.resolve(__dirname, '../controllers', control));
   for (let route of mapping) {
-    // router.get('/proxy', (ctx, next) => {})
-    router[route.methods.toLowerCase()](route.path, route.controller);
+    const methods = route.methods;
+    if (Array.isArray(route.methods)) {
+      route.methods.forEach(m => router[m.toLowerCase()](route.path, route.controller));
+    } else {
+      // router.get('/proxy', (ctx, next) => {})
+      router[methods.toLowerCase()](route.path, route.controller);
+    }
   }
 }
 

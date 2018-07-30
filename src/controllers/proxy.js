@@ -12,7 +12,7 @@ const getProxyController = async (ctx, next) => {
       headers: {
         ...ctx.request.headers,
         host: thisUrl.host,
-        referer: thisUrl.host,
+        referer: thisUrl.protocol + '//' + thisUrl.host,
       }
     }
     ctx.response.body = await fetch(_url, params).then(r => r.text());
@@ -33,6 +33,7 @@ const postProxyController = async (ctx, next) => {
     }
     const thisUrl = url.parse(_url);
     const params = {
+      method: ctx.request.method,
       headers: {
         ...ctx.request.headers,
         host: thisUrl.host,
@@ -54,7 +55,7 @@ module.exports = [{
   path: '/proxy',
   controller: getProxyController
 }, {
-  methods: 'POST',
+  methods: ['POST', 'PUT', 'DELETE'],
   path: '/proxy',
   controller: postProxyController
 }];
