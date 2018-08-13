@@ -14,7 +14,7 @@ app.use(encodeMiddler);
 
 app.use(routesMiddler());
 
-app.listen(3002);
+app.listen(3000);
 
 app.on('error', (error) => {
   console.warn('app has some error:', error);
